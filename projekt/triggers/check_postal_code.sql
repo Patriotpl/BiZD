@@ -1,0 +1,8 @@
+CREATE OR REPLACE TRIGGER STRENKOWSKIP.CHECK_POSTAL_CODE
+	BEFORE INSERT OR UPDATE ON PLACÓWKA
+	FOR EACH ROW
+BEGIN
+	IF NOT regexp_like(:NEW.KOD_POCZTOWY, '^[0-9]{2}-[0-9]{3}$') THEN 
+		raise_application_error(-20001, 'Podano nieprawidłowy kod pocztowy');
+	END IF;
+END;
